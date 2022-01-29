@@ -28,6 +28,18 @@ def dijkstra(graph, src, dest):
             elif shortest_distance[node] < shortest_distance[min_dist_node]:
                 min_dist_node = node
 
+        # These are the nodes we can go from the current best node / min dist node
+        path_options = graph[min_dist_node].items()
+
+        # go through all the option to pick the best one
+        for child , weight in path_options:
+            if weight + shortest_distance[min_dist_node] < shortest_distance[child]:
+                shortest_distance[child] = weight+shortest_distance[min_dist_node]
+                # keep track of the predecessor
+                track_predecessor[child] = min_dist_node
+
+        unseen_nodes.pop(min_dist_node)
+
 
 if __name__ == '__main__':
     graph = {
