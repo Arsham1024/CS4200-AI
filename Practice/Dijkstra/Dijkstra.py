@@ -32,7 +32,7 @@ def dijkstra(graph, src, dest):
         path_options = graph[min_dist_node].items()
 
         # go through all the option to pick the best one
-        for child , weight in path_options:
+        for child, weight in path_options:
             if weight + shortest_distance[min_dist_node] < shortest_distance[child]:
                 shortest_distance[child] = weight+shortest_distance[min_dist_node]
                 # keep track of the predecessor
@@ -40,16 +40,32 @@ def dijkstra(graph, src, dest):
 
         unseen_nodes.pop(min_dist_node)
 
+    # We are going to trace back from the end to start
+    # by this point we have found the destination.
+    current_node = dest
+    while current_node != src:
+        path.insert(0, current_node)
+        # This gives the next node to trace back
+        current_node = track_predecessor[current_node]
+
+    path.insert(0, src)
+
+    # if the shortest distance to goal is not inf means we found something better aka shortest path
+    if shortest_distance[dest] != inf:
+        return path, shortest_distance[dest]
+
+
 
 if __name__ == '__main__':
     graph = {
-        'A' : {'B': 2, 'C':4},
-        'B' : {'A': 2, 'C':3, 'D':8},
-        'C' : {'A': 4, 'B':3, 'E': 5 , 'D': 2},
-        'D' : {'B': 8, 'C':2, 'E': 11 , 'F': 22},
-        'E' : {'C': 5, 'D':11, 'F': 1},
-        'F' : {'D': 22, 'E':1}
+        'A' : {'C': 3, 'F':2},
+        'B' : {'E': 2, 'D':1, 'F':6, 'G':2},
+        'C' : {'A': 3, 'D':4, 'E': 1 , 'F': 2},
+        'D' : {'B': 1, 'C':4},
+        'E' : {'C': 1, 'F':3, 'B': 2},
+        'F' : {'A': 2, 'C':2, 'E':3 , 'B':6, 'G':5 },
+        'G' : {'F': 5 , 'B': 2}
     }
     src = 'A'
-    dest = 'F'
-    dijkstra(graph, src, dest)
+    dest = 'B'
+    print(dijkstra(graph, src, dest))
