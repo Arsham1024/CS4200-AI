@@ -4,8 +4,8 @@ import sys
 def dijkstra(graph, src, dest):
     # max size
     inf = sys.maxsize
-    shortest_distance  = {} # records the cost to reach to that specific node, updated as we move along graph
-    track_predecessor = {} # keep track of path that lead to this node
+    shortest_distance = {} # records the cost to reach to that specific node, updated as we move along graph
+    track_predecessor = {} # keep track of best predecessors for each node
     unseen_nodes = graph
     path = [] # optimal route
 
@@ -14,18 +14,27 @@ def dijkstra(graph, src, dest):
         shortest_distance[node] = inf
     shortest_distance[src] = 0
 
-#     Run until all unseen nodes are gone
+    # Run until all unseen nodes are gone
+    # could maybe do it until we find the path?! that will save time
     while unseen_nodes:
+        # to check uncomment next lines
+        # print(shortest_distance)
+        # print(track_predecessor)
+        # print(unseen_nodes)
+
         min_dist_node = None
+
         # if the node is in unseen node we need to traverse it
         for node in unseen_nodes:
-            # at the begining when min dist is none assgin the current node to it to start the process
+            # at the beginning when min dist is none assign the current node to it to start the process
             if min_dist_node is None:
                 min_dist_node = node
             # if the shortest distance to the node we are considering is less than the shortest distance to
             # the minimum distance node so far then replace the node
             # basically means that if the current distance is shorter then we found a better option than the last one.
             elif shortest_distance[node] < shortest_distance[min_dist_node]:
+                print(node , min_dist_node)
+                print(shortest_distance[node], shortest_distance[min_dist_node])
                 min_dist_node = node
 
         # These are the nodes we can go from the current best node / min dist node
@@ -47,6 +56,7 @@ def dijkstra(graph, src, dest):
         path.insert(0, current_node)
         # This gives the next node to trace back
         current_node = track_predecessor[current_node]
+        # print(path)
 
     path.insert(0, src)
 
