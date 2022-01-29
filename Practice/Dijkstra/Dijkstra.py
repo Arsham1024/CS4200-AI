@@ -33,8 +33,6 @@ def dijkstra(graph, src, dest):
             # the minimum distance node so far then replace the node
             # basically means that if the current distance is shorter then we found a better option than the last one.
             elif shortest_distance[node] < shortest_distance[min_dist_node]:
-                print(node , min_dist_node)
-                print(shortest_distance[node], shortest_distance[min_dist_node])
                 min_dist_node = node
 
         # These are the nodes we can go from the current best node / min dist node
