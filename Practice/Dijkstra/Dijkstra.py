@@ -1,7 +1,34 @@
-
+import heapq
+import sys
 
 def dijkstra(graph, src, dest):
-    pass
+    # max size
+    inf = sys.maxsize
+    shortest_distance  = {} # records the cost to reach to that specific node, updated as we move along graph
+    track_predecessor = {} # keep track of path that lead to this node
+    unseen_nodes = graph
+    path = [] # optimal route
+
+    # initializing all the nodes to inf except for the start node
+    for node in unseen_nodes:
+        shortest_distance[node] = inf
+    shortest_distance[src] = 0
+
+#     Run until all unseen nodes are gone
+    while unseen_nodes:
+        min_dist_node = None
+        # if the node is in unseen node we need to traverse it
+        for node in unseen_nodes:
+            # at the begining when min dist is none assgin the current node to it to start the process
+            if min_dist_node is None:
+                min_dist_node = node
+            # if the shortest distance to the node we are considering is less than the shortest distance to
+            # the minimum distance node so far then replace the node
+            # basically means that if the current distance is shorter then we found a better option than the last one.
+            elif shortest_distance[node] < shortest_distance[min_dist_node]:
+                min_dist_node = node
+
+
 if __name__ == '__main__':
     graph = {
         'A' : {'B': 2, 'C':4},
