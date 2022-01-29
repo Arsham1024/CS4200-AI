@@ -68,4 +68,7 @@ if __name__ == '__main__':
     }
     src = 'A'
     dest = 'B'
-    print(dijkstra(graph, src, dest))
+
+    answer = dijkstra(graph, src, dest)
+    print(f"The shortest path from node {src} to node {dest} is through the nodes {answer[0]} "
+          f"and the minimum cost is {answer[1]}")
