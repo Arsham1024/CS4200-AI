@@ -32,7 +32,6 @@ def dijkstra(graph, src, goal):
         path_options = graph[minimum_node].items()
 
         for child, weight in path_options:
-            print(child, weight)
             if weight + shortest_distance[minimum_node] < shortest_distance[child]:
                 shortest_distance[child] = weight + shortest_distance[minimum_node]
 
