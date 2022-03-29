@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # init pygame
 pygame.init()
@@ -23,10 +24,22 @@ playerX = 370
 playerY = 480
 playerX_change = 0
 
+# enemy vars
+enemy_img = pygame.image.load('banknote.png')
+# X and Y axis to position : Y in upside down
+enemyX = random.randint(50,750)
+enemyY = random.randint(50,150)
+enemyX_change = 0
+
 # PLAYER
 def player(x,y):
     # draw the player icon. blit = draw
     screen.blit(player_img, (x,y))
+
+# PLAYER
+def enemy(x,y):
+    # draw the player icon. blit = draw
+    screen.blit(enemy_img, (x,y))
 
 
 running = True
@@ -60,5 +73,6 @@ while running:
     elif playerX >= screenX-spaceship_x : playerX = screenX-spaceship_x
 
     player(playerX,playerY)
+    enemy(enemyX, enemyY)
     # necessary line to update, add everytime
     pygame.display.update()
