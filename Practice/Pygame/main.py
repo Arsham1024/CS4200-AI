@@ -39,15 +39,13 @@ while running:
         if event.type == pygame.KEYDOWN:
             print("Keystroke registered")
             if event.key == pygame.K_LEFT:
-                playerX_change -= 0.1
+                playerX_change = -0.4
             if event.key == pygame.K_RIGHT:
-                playerX_change += 0.1
+                playerX_change = 0.4
         
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                pass
-            if event.key == pygame.K_RIGHT:
-                pass
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                playerX_change = 0
     
     # draw the player
     playerX += playerX_change
