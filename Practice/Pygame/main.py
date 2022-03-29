@@ -1,5 +1,7 @@
+from turtle import distance
 import pygame
 import random
+import math
 
 # init pygame
 pygame.init()
@@ -9,6 +11,7 @@ screenY = 600
 spaceship_x = 32
 spaceship_y = 32
 enemy_sizeX = 32
+score = 0
 
 # create screen add (()) double pran
 screen = pygame.display.set_mode((screenX, screenY))
@@ -28,7 +31,7 @@ playerX_change = 0
 # enemy vars
 enemy_img = pygame.image.load('ghost.png')
 # X and Y axis to position : Y in upside down
-enemyX = random.randint(0,screenX)
+enemyX = random.randint(0,screenX-playerX)
 enemyY = random.randint(50,150)
 enemyX_change = 0.5
 enemyY_change = 40
@@ -39,7 +42,7 @@ bullet_img = pygame.image.load('bullet.png')
 bulletX = 0
 bulletY = 480
 bulletX_change = 0
-bulletY_change = 2
+bulletY_change = 4
 
 # state is either ready (can't see the bullet) or fired (can see the bullet)
 bullet_state = "Ready" 
@@ -60,6 +63,13 @@ def fire_bullet(x,y):
     bullet_state = "Fire"
     screen.blit(bullet_img, (x+5,y))
 
+def is_collision(enemyX, enemyY, bulletX, bulletY):
+    distance = math.sqrt( (enemyX-bulletX)**2 + (enemyY - bulletY)**2 )
+    if distance <= 27:
+        return True
+    else:
+        return False
+
 running = True
 # Game loop , infinit loop
 while running:
@@ -75,10 +85,10 @@ while running:
         if event.type == pygame.KEYDOWN:
             print("Keystroke registered")
             if event.key == pygame.K_LEFT:
-                playerX_change = -1
+                playerX_change = -2
             if event.key == pygame.K_RIGHT:
-                playerX_change = 1
-            if event.key == pygame.K_SPACE:
+                playerX_change = 2
+            if event.key == pygame.K_SPACE and bullet_state == "Ready":
                 bulletX = playerX
                 fire_bullet(bulletX, bulletY)
         
@@ -114,6 +124,19 @@ while running:
     if bullet_state is "Fire":
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change 
+
+
+    # Collision
+    collision = is_collision(enemyX, enemyY, bulletX, bulletY)
+    if collision:
+        bulletY = 480
+        bullet_state = "Ready"
+        score += 1
+        print(score)
+        # X and Y axis to position : Y in upside down
+        enemyX = random.randint(0,screenX)
+        enemyY = random.randint(50,150)
+
 
     player(playerX,playerY)
     enemy(enemyX, enemyY)
