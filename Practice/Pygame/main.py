@@ -8,6 +8,7 @@ screenX = 800
 screenY = 600
 spaceship_x = 32
 spaceship_y = 32
+enemy_sizeX = 32
 
 # create screen add (()) double pran
 screen = pygame.display.set_mode((screenX, screenY))
@@ -27,9 +28,10 @@ playerX_change = 0
 # enemy vars
 enemy_img = pygame.image.load('ghost.png')
 # X and Y axis to position : Y in upside down
-enemyX = random.randint(50,750)
+enemyX = random.randint(0,screenX)
 enemyY = random.randint(50,150)
-enemyX_change = 0
+enemyX_change = 0.5
+enemyY_change = 40
 
 # PLAYER
 def player(x,y):
@@ -69,8 +71,19 @@ while running:
     playerX += playerX_change
     # To keep the spaceships within the boundry! 
     # screen width - spaceship width because of 0,0 of spaceship is on the left botom
-    if playerX <= 0 : playerX = 0
+    if playerX <= 0 : playerX = 0 
     elif playerX >= screenX-spaceship_x : playerX = screenX-spaceship_x
+
+
+    # Enemy's movement
+    enemyX += enemyX_change
+    if enemyX <= 0 : 
+        enemyX_change = 1
+        enemyY += enemyY_change
+
+    elif enemyX >= screenX-enemy_sizeX: 
+        enemyX_change = -1
+        enemyY += enemyY_change
 
     player(playerX,playerY)
     enemy(enemyX, enemyY)
