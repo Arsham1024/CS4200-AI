@@ -33,6 +33,17 @@ enemyY = random.randint(50,150)
 enemyX_change = 0.5
 enemyY_change = 40
 
+# Bullet vars
+bullet_img = pygame.image.load('bullet.png')
+# X and Y axis to position : Y in upside down
+bulletX = 0
+bulletY = 480
+bulletX_change = 0
+bulletY_change = 5
+
+# state is either ready (can't see the bullet) or fired (can see the bullet)
+bullet_state = "ready" 
+
 # PLAYER
 def player(x,y):
     # draw the player icon. blit = draw
@@ -43,6 +54,11 @@ def enemy(x,y):
     # draw the player icon. blit = draw
     screen.blit(enemy_img, (x,y))
 
+def fire_bullet(x,y):
+    # Shoot the bullet
+    global bullet_state
+    bullet_state = "Fire"
+    screen.blit(bullet_img, (x+16,y+10))
 
 running = True
 # Game loop , infinit loop
@@ -62,6 +78,8 @@ while running:
                 playerX_change = -1
             if event.key == pygame.K_RIGHT:
                 playerX_change = 1
+            if event.key == pygame.K_SPACE:
+                fire_bullet(playerX, bulletY)
         
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -84,6 +102,12 @@ while running:
     elif enemyX >= screenX-enemy_sizeX: 
         enemyX_change = -1
         enemyY += enemyY_change
+
+
+    # bullet movement
+    if bullet_state == "Fire":
+        fire_bullet(playerX, bulletY)
+        bulletY -= bulletY_change 
 
     player(playerX,playerY)
     enemy(enemyX, enemyY)
