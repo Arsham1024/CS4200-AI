@@ -3,8 +3,13 @@ import pygame
 # init pygame
 pygame.init()
 
+screenX = 800
+screenY = 600
+spaceship_x = 32
+spaceship_y = 32
+
 # create screen add (()) double pran
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((screenX, screenY))
 
 # Title and Icon customization
 pygame.display.set_caption("Arsham")
@@ -39,9 +44,9 @@ while running:
         if event.type == pygame.KEYDOWN:
             print("Keystroke registered")
             if event.key == pygame.K_LEFT:
-                playerX_change = -0.4
+                playerX_change = -1
             if event.key == pygame.K_RIGHT:
-                playerX_change = 0.4
+                playerX_change = 1
         
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -49,6 +54,11 @@ while running:
     
     # draw the player
     playerX += playerX_change
+    # To keep the spaceships within the boundry! 
+    # screen width - spaceship width because of 0,0 of spaceship is on the left botom
+    if playerX <= 0 : playerX = 0
+    elif playerX >= screenX-spaceship_x : playerX = screenX-spaceship_x
+
     player(playerX,playerY)
     # necessary line to update, add everytime
     pygame.display.update()
