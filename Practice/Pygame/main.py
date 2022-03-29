@@ -14,18 +14,18 @@ screen = pygame.display.set_mode((screenX, screenY))
 
 # Title and Icon customization
 pygame.display.set_caption("Arsham")
-icon = pygame.image.load('face-recognition.png')
+icon = pygame.image.load('alien.png')
 pygame.display.set_icon(icon)
 
 # Player vars
-player_img = pygame.image.load('letter-a.png')
+player_img = pygame.image.load('spaceship.png')
 # X and Y axis to position : Y in upside down
 playerX = 370
 playerY = 480
 playerX_change = 0
 
 # enemy vars
-enemy_img = pygame.image.load('banknote.png')
+enemy_img = pygame.image.load('ghost.png')
 # X and Y axis to position : Y in upside down
 enemyX = random.randint(50,750)
 enemyY = random.randint(50,150)
